@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: washington_pg_dev
+    environment:
+      POSTGRES_DB: washington
+      POSTGRES_USER: washington_user
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-devpassword}
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg_dev_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U washington_user -d washington"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  api-core:
+    build:
+      context: ./apps/api-core
+    ports:
+      - "3400:3400"
+    environment:
+      DATABASE_URL: postgres://washington_user:${POSTGRES_PASSWORD:-devpassword}@db:5432/washington
+      JWT_SECRET: ${JWT_SECRET}
+      PORT: 3400
+      NODE_ENV: development
+      LOG_LEVEL: debug
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pg_dev_data:

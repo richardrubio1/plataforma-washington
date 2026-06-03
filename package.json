@@ -1,0 +1,22 @@
+{
+  "name": "plataforma-washington",
+  "private": true,
+  "scripts": {
+    "dev": "pnpm --parallel -r dev",
+    "build": "pnpm -r build",
+    "test": "pnpm -r test",
+    "lint": "biome check .",
+    "format": "biome format --write .",
+    "db:migrate": "pnpm --filter @washington/db migrate",
+    "db:generate": "pnpm --filter @washington/db generate",
+    "db:seed": "pnpm --filter @washington/db seed"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "typescript": "^5.7.2"
+  },
+  "engines": {
+    "node": ">=22",
+    "pnpm": ">=9"
+  }
+}
