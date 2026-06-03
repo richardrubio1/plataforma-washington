@@ -43,11 +43,12 @@ export default defineConfig({
     },
     coverage: {
       provider: 'v8',
+      include: ['src/modules/**/service.ts'],
       thresholds: {
-        lines: 60,
-        functions: 60,
-        branches: 60,
-        statements: 60,
+        lines: 85,
+        functions: 85,
+        branches: 75,
+        statements: 85,
       },
     },
   },
